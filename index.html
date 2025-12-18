@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dr. Harikrishnan Aravindakshan | Space Plasma Physics</title>
+  <meta name="description" content="Academic homepage of Dr. Harikrishnan Aravindakshan — postdoctoral researcher in space plasma physics (3D PIC reconnection, magnetotail dynamics, dipolarization fronts)." />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- Optional: nicer typography (safe fallback to system fonts if blocked) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===============  Design tokens  =============== */
+    :root{
+      --bg: #f7f8fb;
+      --surface: #ffffff;
+      --surface-2:#fbfcff;
+      --text: #0f172a;
+      --muted:#475569;
+      --border:#e6e8f2;
+
+      --brand:#0b3a6e;        /* deep academic navy */
+      --brand-2:#1b6ca8;      /* accent blue */
+      --brand-soft: rgba(27,108,168,.12);
+
+      --shadow: 0 14px 40px rgba(2, 12, 27, .08);
+      --radius: 18px;
+      --radius-sm: 12px;
+
+      --max: 1080px;
+      --pad: 20px;
+
+      --focus: 3px solid rgba(27,108,168,.35);
+    }
+
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#070a12;
+        --surface:#0b1020;
+        --surface-2:#0e1630;
+        --text:#e8eefc;
+        --muted:#a8b3cf;
+        --border:#1e2a4a;
+        --brand:#6fb9ff;
+        --brand-2:#9ad5ff;
+        --brand-soft: rgba(111,185,255,.14);
+        --shadow: 0 18px 60px rgba(0,0,0,.35);
+        --focus: 3px solid rgba(154,213,255,.35);
+      }
+      html[data-theme="light"]{ /* allow manual override */
+        --bg: #f7f8fb;
+        --surface: #ffffff;
+        --surface-2:#fbfcff;
+        --text: #0f172a;
+        --muted:#475569;
+        --border:#e6e8f2;
+        --brand:#0b3a6e;
+        --brand-2:#1b6ca8;
+        --brand-soft: rgba(27,108,168,.12);
+        --shadow: 0 14px 40px rgba(2, 12, 27, .08);
+        --focus: 3px solid rgba(27,108,168,.35);
+      }
+    }
+
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.55;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 20% -10%, var(--brand-soft), transparent 60%),
+        radial-gradient(900px 600px at 90% 0%, rgba(11,58,110,.10), transparent 55%),
+        var(--bg);
+    }
+
+    a{ color:var(--brand-2); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+    a:focus-visible, button:focus-visible{ outline: var(--focus); outline-offset: 3px; border-radius: 10px; }
+
+    .skip-link{
+      position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+    }
+    .skip-link:focus{
+      left: 16px; top: 12px; width:auto; height:auto;
+      padding:10px 12px; background:var(--surface); border:1px solid var(--border);
+      border-radius: 12px; box-shadow: var(--shadow); z-index: 9999;
+    }
+
+    /* ===============  Layout  =============== */
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+
+    /* Top nav */
+    .topbar{
+      position: sticky; top:0; z-index: 1000;
+      backdrop-filter: saturate(1.2) blur(10px);
+      background: color-mix(in srgb, var(--bg) 72%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 14px;
+      padding: 14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      font-weight: 700; letter-spacing: .2px;
+      color: var(--text);
+      text-decoration:none;
+      white-space: nowrap;
+    }
+    .dot{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-2), var(--brand));
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand-soft) 70%, transparent);
+    }
+    nav ul{
+      list-style:none; margin:0; padding:0;
+      display:flex; gap: 18px; align-items:center;
+    }
+    nav a{ color: var(--muted); font-weight: 500; text-decoration:none; }
+    nav a:hover{ color: var(--text); text-decoration:none; }
+    .nav-actions{ display:flex; gap: 10px; align-items:center; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration:none;
+      box-shadow: 0 8px 24px rgba(2, 12, 27, .06);
+    }
+    .btn:hover{ text-decoration:none; border-color: color-mix(in srgb, var(--border) 60%, var(--brand-2)); }
+    .btn.primary{
+      border-color: color-mix(in srgb, var(--brand-2) 35%, var(--border));
+      background: linear-gradient(135deg, color-mix(in srgb, var(--brand-2) 90%, #fff), var(--brand));
+      color: white;
+    }
+    .btn.primary:hover{ filter: brightness(1.04); }
+
+    .icon{
+      width: 18px; height: 18px; display:inline-block; flex: 0 0 auto;
+    }
+    .ghost{
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 70%, transparent);
+      box-shadow: none;
+    }
+
+    /* Mobile nav: wrap links */
+    @media (max-width: 860px){
+      nav ul{ gap: 12px; flex-wrap: wrap; justify-content:flex-end; }
+      .btn{ padding: 9px 12px; }
+    }
+    @media (max-width: 620px){
+      .topbar-inner{ align-items:flex-start; }
+      nav ul{ justify-content:flex-start; }
+      .nav-actions{ width: 100%; justify-content:flex-start; flex-wrap: wrap; }
+    }
+
+    /* Hero */
+    header.hero{
+      padding: 48px 0 18px;
+    }
+    .hero-card{
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.45fr .9fr;
+      gap: 26px;
+      padding: 26px;
+      align-items:center;
+    }
+    @media (max-width: 860px){
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+
+    .kicker{
+      display:inline-flex; align-items:center; gap: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      background: color-mix(in srgb, var(--brand-soft) 55%, transparent);
+      border: 1px solid color-mix(in srgb, var(--brand-soft) 70%, var(--border));
+      padding: 8px 12px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+    .kicker b{ color: var(--text); }
+    h1{
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin: 14px 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      font-size: 1.08rem;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+    .meta{
+      display:flex; flex-wrap: wrap; gap: 10px 14px;
+      color: var(--muted);
+      margin: 14px 0 18px;
+      font-weight: 500;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 8px 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+    .hero-actions{
+      display:flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 8px;
+    }
+
+    .portrait{
+      display:flex; align-items:center; justify-content:center;
+    }
+    .portrait-frame{
+      width: min(260px, 60vw);
+      aspect-ratio: 1/1;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--brand-soft) 80%, transparent), transparent);
+      padding: 10px;
+      box-shadow: 0 18px 50px rgba(2,12,27,.14);
+    }
+    .portrait img{
+      width:100%; height:100%;
+      object-fit: cover;
+      border-radius: 999px;
+      filter: saturate(1.02);
+    }
+
+    /* Sections */
+    main{ padding: 26px 0 70px; }
+    section{ margin-top: 36px; }
+    .section-title{
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    h2{
+      font-size: 1.35rem;
+      margin: 0;
+      letter-spacing: -.01em;
+    }
+    .divider{
+      height:1px; width: 100%;
+      background: color-mix(in srgb, var(--border) 85%, transparent);
+      margin: 26px 0 0;
+    }
+    .lead{ color: var(--muted); margin: 10px 0 0; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      background: color-mix(in srgb, var(--surface) 94%, transparent);
+      border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 1rem;
+      letter-spacing: -.005em;
+    }
+    .card p{
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    /* About + highlights */
+    .about{ grid-column: span 7; }
+    .highlights{ grid-column: span 5; }
+    @media (max-width: 860px){
+      .about, .highlights{ grid-column: span 12; }
+    }
+    .highlights ul{
+      margin: 10px 0 0; padding: 0 0 0 18px;
+      color: var(--muted);
+    }
+    .highlights li{ margin: 8px 0; }
+
+    /* Research cards */
+    .research .card{ grid-column: span 6; }
+    @media (max-width: 860px){ .research .card{ grid-column: span 12; } }
+
+    /* Publications */
+    .pubs .card{ grid-column: span 12; }
+    .pub{
+      display:flex; gap: 14px;
+      padding: 12px 0;
+      border-top: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+    }
+    .pub:first-child{ border-top: 0; padding-top: 0; }
+    .year{
+      min-width: 54px;
+      font-weight: 700;
+      color: var(--text);
+      opacity: .88;
+    }
+    .pub-body{ flex:1; }
+    .pub-title{ font-weight: 700; color: var(--text); margin: 0 0 4px; }
+    .pub-meta{ color: var(--muted); margin: 0; }
+    .pub-links{ margin-top: 6px; display:flex; flex-wrap: wrap; gap: 10px; }
+    .tag{
+      display:inline-flex; align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: .88rem;
+      text-decoration:none;
+    }
+
+    /* Contact */
+    .contact .card{ grid-column: span 6; }
+    @media (max-width: 860px){ .contact .card{ grid-column: span 12; } }
+    .contact a{ font-weight: 600; }
+    .kv{ margin: 8px 0 0; color: var(--muted); }
+
+    /* Footer */
+    footer{
+      border-top: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+      padding: 26px 0 40px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+    html{ scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top" aria-label="Home">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Dr. H. Aravindakshan</span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#about">About</a></li>
+                    <li><a href="#appointments">Appointments</a></li>
+<li><a href="#research">Research</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#teaching">Teaching</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn ghost" id="themeToggle" type="button" aria-label="Toggle theme">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Theme
+        </button>
+        <a class="btn primary" href="mailto:harikrishnan.aravindakshan@rub.de">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
+            <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="top" class="wrap">
+    <header class="hero" aria-label="Hero">
+      <div class="hero-card">
+        <div class="hero-grid">
+          <div>
+            <div class="kicker">
+              <span class="dot" aria-hidden="true"></span>
+              <span><b>Space plasma physics</b> · kinetic simulations · magnetotail dynamics</span>
+            </div>
+
+            <h1>Dr. Harikrishnan Aravindakshan</h1>
+            <p class="subtitle">Postdoctoral researcher focused on magnetic reconnection, dipolarization fronts, and multiscale energy conversion in space plasmas.</p>
+
+            <div class="meta" aria-label="Quick facts">
+              <span class="pill">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21s7-4.35 7-11a7 7 0 1 0-14 0c0 6.65 7 11 7 11Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                Ruhr University Bochum, Germany
+              </span>
+
+              <span class="pill">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                3D PIC · HPC · Python
+              </span>
+            </div>
+
+            <div class="hero-actions">
+              <a class="btn primary" href="#contact">Collaborate / Contact</a>
+              <a class="btn" href="mailto:harikrishnan.aravindakshan@rub.de?subject=CV%20request">Request CV</a>
+              <a class="btn" href="#publications">Selected papers</a>
+            </div>
+
+            <p class="lead" style="margin-top:14px;">
+              Space plasma physics • Kinetic simulations • Magnetic reconnection
+            </p>
+          </div>
+
+          <div class="portrait">
+            <div class="portrait-frame" aria-label="Profile photo">
+              <picture>
+                <source srcset="profile.webp" type="image/webp">
+                <img src="profile.jpg" alt="Portrait of Dr. Harikrishnan Aravindakshan" loading="lazy">
+              </picture>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <!-- About -->
+      <section id="about">
+        <div class="section-title">
+          <h2>About</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card about">
+            <h3>Summary</h3>
+            <p>
+              I am a postdoctoral researcher at Ruhr University Bochum working on kinetic plasma processes in the Earth’s magnetotail.
+              My research uses large-scale 3D particle-in-cell (PIC) simulations and theory-guided diagnostics to study magnetic reconnection,
+              dipolarization fronts, jet-driven instabilities, and energy conversion (e.g., <em>J·E</em>) across ion-to-electron scales.
+            </p>
+            <p style="margin-top:10px;">
+              I enjoy building reproducible analysis pipelines (Python/HDF5), producing publication-quality figures, and connecting simulation results
+              to multi-mission observations (e.g., THEMIS, Cluster, MMS).
+            </p>
+          </div>
+
+          <div class="card highlights">
+            <h3>Current highlights</h3>
+            <ul>
+              <li>3D PIC reconnection and magnetotail transients (DFs / DFBs / BBFs)</li>
+              <li>Energy conversion & partitioning (ions vs electrons; kinetic effects)</li>
+              <li>Front structuring via ballooning/interchange and drift instabilities</li>
+              <li>HPC-scale workflows: data reduction, diagnostics, visualization</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+      </section>
+
+      
+      <!-- Appointments -->
+      <section id="appointments" class="pubs">
+        <div class="section-title">
+          <h2>Appointments</h2>
+        </div>
+        <p class="lead">Academic positions and research appointments.</p>
+
+        <div class="card" style="margin-top:14px;">
+          <div class="pub">
+            <div class="year">2025–present</div>
+            <div class="pub-body">
+              <p class="pub-title">Postdoctoral Fellow — Institute for Theoretical Physics I, Ruhr University Bochum (Germany)</p>
+              <p class="pub-meta">Space plasma physics; kinetic simulations and theory-guided diagnostics.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2023–2025</div>
+            <div class="pub-body">
+              <p class="pub-title">Postdoctoral Fellow — Department of Mathematics, KU Leuven (Belgium)</p>
+              <p class="pub-meta">Plasma / space physics research with an emphasis on computational and theoretical modeling.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2020–2023</div>
+            <div class="pub-body">
+              <p class="pub-title">Research Associate — Indian Institute of Geomagnetism, Mumbai (India)</p>
+              <p class="pub-meta">Nonlinear plasma theory and space plasma applications.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2017–2020</div>
+            <div class="pub-body">
+              <p class="pub-title">Senior Research Fellow — Indian Institute of Geomagnetism, Mumbai (India)</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2015–2017</div>
+            <div class="pub-body">
+              <p class="pub-title">Junior Research Fellow — Indian Institute of Geomagnetism, Mumbai (India)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin-top:0;">Selected research visits</h3>
+          <ul style="margin:0; padding-left:18px;">
+            <li>2019 — Visiting Research Fellow, University of Maryland (USA)</li>
+            <li>Feb–Mar 2022 — Visiting Scientist, Khalifa University (UAE)</li>
+            <li>Jun–Jul 2022; Sep 2022 — Visiting Scientist, Ruhr University Bochum (Germany)</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+      </section>
+
+
+      <!-- Research -->
+      <section id="research" class="research">
+        <div class="section-title">
+          <h2>Research</h2>
+        </div>
+        <p class="lead">Representative themes (edit the text to match your current projects).</p>
+
+        <div class="grid" style="margin-top:14px;">
+          <div class="card">
+            <h3>Magnetic reconnection in the magnetotail</h3>
+            <p>3D kinetic reconnection, flux ropes, Hall physics, and multiscale structure of exhausts and fronts.</p>
+          </div>
+
+          <div class="card">
+            <h3>Dipolarization fronts and jet dynamics</h3>
+            <p>Front formation, steepening, and corrugation; coupling to mesoscale flows and transient bundles.</p>
+          </div>
+
+          <div class="card">
+            <h3>Instabilities and turbulence at fronts</h3>
+            <p>Ballooning/interchange, lower-hybrid drift, whistler activity, and their role in transport and mixing.</p>
+          </div>
+
+          <div class="card">
+            <h3>Energy conversion and dissipation proxies</h3>
+            <p>Diagnostics based on <em>J·E</em>, pressure tensor work, and field–particle correlations (where applicable).</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+      </section>
+
+      <!-- Publications -->
+      <section id="publications" class="pubs">
+        <div class="section-title">
+          <h2>Publications</h2>
+          <a class="tag" href="https://scholar.google.com/citations?user=Fhzfx08AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        </div>
+        <p class="lead">Peer-reviewed articles and selected conference proceedings. Full-text copies are available upon request.</p>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin-top:0;">Journal articles</h3>
+
+          <div class="pub">
+            <div class="year">2025</div>
+            <div class="pub-body">
+              <p class="pub-title">Lapenta, G., Berchem, J., El-Alaoui, M., Walker, R., <strong>Aravindakshan, H.</strong>, Reisinger, N., Pucci, F., Arrò, G., &amp; Bacchini, F. A Lagrangian-frame technique for investigating plasma turbulence in complex underlying system-scale structures.</p>
+              <p class="pub-meta"><em>Fundamental Plasma Physics</em>, 100099.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2023</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Vasko, I. Y., Kakad, A., Kakad, B., &amp; Wang, R. Theory of ion holes in plasmas with flat-topped electron distributions.</p>
+              <p class="pub-meta"><em>Physics of Plasmas</em>, 30(2), 022903.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2022</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Kakad, A., Kakad, B., &amp; Kourakis, I. Bernstein–Greene–Kruskal ion modes in dusty space plasmas: application in Saturn’s magnetosphere.</p>
+              <p class="pub-meta"><em>The Astrophysical Journal</em>, 936(2), 102.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2022</div>
+            <div class="pub-body">
+              <p class="pub-title">Kakad, B., Kakad, A., <strong>Aravindakshan, H.</strong>, &amp; Kourakis, I. Debye-scale solitary structures in the Martian magnetosheath.</p>
+              <p class="pub-meta"><em>The Astrophysical Journal</em>, 934(2), 126.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2021</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Kakad, A., Kakad, B., &amp; Yoon, P. H. Structural characteristics of ion holes in plasma.</p>
+              <p class="pub-meta"><em>Plasma</em>, 4(3), 435–449.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2021</div>
+            <div class="pub-body">
+              <p class="pub-title">Soni, P. K., <strong>Aravindakshan, H.</strong>, Kakad, B., &amp; Kakad, A. Nonlinear particle trapping by coherent waves in thermal and nonthermal plasmas.</p>
+              <p class="pub-meta"><em>Physica Scripta</em>, 96(10), 105604.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2020</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Yoon, P. H., Kakad, A., &amp; Kakad, B. Theory of ion holes in space and astrophysical plasmas.</p>
+              <p class="pub-meta"><em>Monthly Notices of the Royal Astronomical Society: Letters</em>, 497(1), L69–L75.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2018</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Kakad, A., &amp; Kakad, B. Bernstein–Greene–Kruskal theory of electron holes in superthermal space plasma.</p>
+              <p class="pub-meta"><em>Physics of Plasmas</em>, 25(5), 052901.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2018</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Kakad, A., &amp; Kakad, B. Effects of wave potential on electron holes in thermal and superthermal space plasmas.</p>
+              <p class="pub-meta"><em>Physics of Plasmas</em>, 25(12), 122901.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin-top:0;">Conference proceedings</h3>
+
+          <div class="pub">
+            <div class="year">2019</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Kakad, A., &amp; Kakad, B. Characteristics of Bernstein–Greene–Kruskal modes in superthermal space plasmas.</p>
+              <p class="pub-meta"><em>URSI Asia-Pacific Radio Science Conference (AP-RASC)</em>, 1–1.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2019</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Kakad, A., &amp; Kakad, B. Theory of electron holes in superthermal space plasma.</p>
+              <p class="pub-meta"><em>AGU Fall Meeting</em>.</p>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="year">2018</div>
+            <div class="pub-body">
+              <p class="pub-title"><strong>Aravindakshan, H.</strong>, Kakad, B., &amp; Kakad, A. BGK Electron Holes in Nonthermal Space Plasmas.</p>
+              <p class="pub-meta"><em>42nd COSPAR Scientific Assembly</em> (Vol. 42), D3.3-15–18.</p>
+            </div>
+          </div>
+
+          <p class="muted" style="margin-top:12px; margin-bottom:0;">
+            Request full texts: <a href="mailto:harikrishnan.aravindakshan@rub.de?subject=Publication%20request">email me</a>.
+          </p>
+        </div>
+
+        <div class="divider"></div>
+      </section>
+
+      <!-- Teaching -->
+      <section id="teaching">
+        <div class="section-title">
+          <h2>Teaching & outreach</h2>
+        </div>
+
+        <div class="grid" style="margin-top:14px;">
+          <div class="card" style="grid-column: span 6;">
+            <h3>Teaching</h3>
+            <p>Courses, seminars, or tutorials (TA/lecturer roles). Add semesters and brief responsibilities.</p>
+          </div>
+
+          <div class="card" style="grid-column: span 6;">
+            <h3>Supervision</h3>
+            <p>List student supervision (BSc/MSc) and project topics. Keep to 1–2 lines per student/project.</p>
+          </div>
+
+          <div class="card" style="grid-column: span 12;">
+            <h3>Talks & outreach</h3>
+            <p>Conference talks, invited seminars, outreach activities, posters, and workshops.</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+      </section>
+
+      <!-- Contact -->
+      
+      <section id="contact" class="contact">
+        <div class="section-title">
+          <h2>Contact</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Email</h3>
+            <p style="margin:0;">
+              <a href="mailto:harikrishnan.aravindakshan@rub.de">harikrishnan.aravindakshan@rub.de</a><br/>
+              <a href="mailto:hari1501@gmail.com">hari1501@gmail.com</a>
+            </p>
+            <p class="muted" style="margin-top:10px;">CV and full-text copies of publications are available upon request.</p>
+          </div>
+
+          <div class="card">
+            <h3>Links</h3>
+            <p style="margin:0;">
+              <a class="tag" href="https://scholar.google.com/citations?user=Fhzfx08AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="tag" href="https://orcid.org/0000-0003-4663-4255" target="_blank" rel="noopener">ORCID</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+      </section>
+
+    </main>
+
+    <footer class="wrap">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; align-items:center;">
+        <div>&copy; <span id="year"></span> Dr. Harikrishnan Aravindakshan</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#top">Back to top</a>
+          <span aria-hidden="true">·</span>
+          <a href="mailto:harikrishnan.aravindakshan@rub.de">Email</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const stored = localStorage.getItem('theme');
+      if(stored){ root.setAttribute('data-theme', stored); }
+
+      btn?.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
