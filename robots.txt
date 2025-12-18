@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://https://harikrishnan-aravindakshan.github.io//sitemap.xml
